@@ -1,0 +1,39 @@
+;;SUBTRACT TWO ARRAYS
+
+.model small
+.stack 100h
+.data
+ar1 db 48h,49h,43h,46h
+ar2 db 11h,11h,11h,11h
+.code
+start:
+mov ax,@data
+mov ds,ax
+mov si, offset ar1
+mov di, offset ar2
+mov cl,05h
+mov ah,00h
+l1:mov al,[si]
+    sub al,byte ptr[di]
+    mov [si],al
+    inc si
+    inc di
+    dec cl
+    jnz l1
+    
+output:
+   lea dx,ar1
+    mov di,0
+    mov cx,04h
+Output_loop:
+  mov dl,ar1[di]
+  mov ah,2
+  int 21h
+  inc di
+  mov dl,0ah
+  mov ah,2
+  int 21h
+  loop output_loop
+    mov ah,4ch
+    int 21h
+    end
